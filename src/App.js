@@ -42,7 +42,7 @@ class App extends Component {
       completed: false
     }
     this.setState((state) => {
-      return {todos: [...state.todos, todoItem]}
+      return {todos: [...state.todos, todoItem], inputValue: ''}
     })
   }
   }
