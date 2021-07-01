@@ -34,7 +34,6 @@ class App extends Component {
 
   handleClick(e) {
     e.preventDefault()
-    e.target.reset()
     if (this.state.inputValue !== '') {
       const todoItem = {
         title: this.state.inputValue,
