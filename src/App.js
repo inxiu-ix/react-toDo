@@ -15,9 +15,9 @@ class App extends Component {
 
   onChange = (e) => {
     this.setState((state) => {
-     const inputValue  = e.target.value;
+      const inputValue = e.target.value
 
-     return {inputValue: state.inputValue + inputValue}
+      return { inputValue: state.inputValue + inputValue }
     })
   }
 
@@ -43,8 +43,6 @@ class App extends Component {
       }
       this.setState({ todos: [...this.state.todos, todoItem], inputValue: '' })
     }
-
-    
   }
 
   removeTodo = (id) => {
@@ -63,7 +61,6 @@ class App extends Component {
     this.setState(() => {
       return { todos }
     })
-
   }
 
   render() {
@@ -71,10 +68,11 @@ class App extends Component {
     return (
       <div className="App">
         <h1>To Do List</h1>
-        <AddToDo 
-        onSubmit={this.handleClick} 
-        onChange={this.onChange}
-        value={this.state.inputValue} />
+        <AddToDo
+          onSubmit={this.handleClick}
+          onChange={this.onChange}
+          value={this.state.inputValue}
+        />
         <ToDoList
           todos={this.state.todos}
           deleteTask={this.removeTodo}
