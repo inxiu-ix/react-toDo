@@ -14,11 +14,12 @@ class App extends Component {
   }
 
   onChange = (e) => {
-    this.setState(() => {
-     const inputValue  = e.target.value;
+    console.log('e.target', e.target.value)
+    const inputValue  = e.target.value;
+     this.setState((state, props) => {
+      return {inputValue: e.target.value};
+    });
 
-     return {inputValue}
-    })
   }
 
   saveEdit = (value, todo) => {
@@ -34,13 +35,15 @@ class App extends Component {
 
   handleClick(e) {
     e.preventDefault();
-    e.target.reset()
+    // e.target.reset();
+    console.log(this.state.inputValue);
     if (this.state.inputValue !== '') {
     const todoItem = {
       title: this.state.inputValue,
       id: +new Date(),
       completed: false
     }
+    
     this.setState((state) => {
       return {todos: [...state.todos, todoItem], inputValue: ''}
     })
@@ -69,7 +72,7 @@ class App extends Component {
     return (
       <div className="App">
         <h1>To Do List</h1>
-        <AddToDo onSubmit={this.handleClick} onChange={this.onChange} />
+        <AddToDo onSubmit={this.handleClick} onChange={this.onChange}  value={this.state.inputValue}/>
         <ToDoList todos={this.state.todos} deleteTask={this.removeTodo} completeTask={this.completeTodo} save={this.saveEdit}/>
       </div>
     )
