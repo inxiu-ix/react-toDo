@@ -14,12 +14,9 @@ class App extends Component {
   }
 
   onChange = (e) => {
-    console.log('e.target', e.target.value)
-    const inputValue  = e.target.value;
-     this.setState((state, props) => {
+     this.setState(() => {
       return {inputValue: e.target.value};
     });
-
   }
 
   saveEdit = (value, todo) => {
@@ -35,7 +32,6 @@ class App extends Component {
 
   handleClick(e) {
     e.preventDefault();
-    // e.target.reset();
     console.log(this.state.inputValue);
     if (this.state.inputValue !== '') {
     const todoItem = {
