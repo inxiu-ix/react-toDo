@@ -4,20 +4,20 @@ import AddToDo from './AddToDo/AddToDo'
 import './index.scss'
 
 class App extends Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
     this.state = {
       todos: [],
-      inputValue: ''
+      inputValue: '',
     }
     this.handleClick = this.handleClick.bind(this)
   }
 
   onChange = (e) => {
-    this.setState(() => {
+    this.setState((state) => {
      const inputValue  = e.target.value;
 
-     return {inputValue}
+     return {inputValue: state.inputValue + inputValue}
     })
   }
 
@@ -28,29 +28,29 @@ class App extends Component {
       todo.title = value
     }
     this.setState(() => {
-      return{todos}
+      return { todos }
     })
   }
 
   handleClick(e) {
-    e.preventDefault();
+    e.preventDefault()
     e.target.reset()
     if (this.state.inputValue !== '') {
-    const todoItem = {
-      title: this.state.inputValue,
-      id: +new Date(),
-      completed: false
+      const todoItem = {
+        title: this.state.inputValue,
+        id: +new Date(),
+        completed: false,
+      }
+      this.setState({ todos: [...this.state.todos, todoItem], inputValue: '' })
     }
-    this.setState((state) => {
-      return {todos: [...state.todos, todoItem], inputValue: ''}
-    })
-  }
+
+    
   }
 
   removeTodo = (id) => {
     this.setState(() => {
-      const todos = this.state.todos.filter(todo => todo.id !== id)
-      return {todos}
+      const todos = this.state.todos.filter((todo) => todo.id !== id)
+      return { todos }
     })
   }
 
@@ -61,16 +61,26 @@ class App extends Component {
       todo.completed = !todo.completed
     }
     this.setState(() => {
-      return {todos}
+      return { todos }
     })
+
   }
 
   render() {
+    console.log('value>>>', this.state.inputValue)
     return (
       <div className="App">
         <h1>To Do List</h1>
-        <AddToDo onSubmit={this.handleClick} onChange={this.onChange} />
-        <ToDoList todos={this.state.todos} deleteTask={this.removeTodo} completeTask={this.completeTodo} save={this.saveEdit}/>
+        <AddToDo 
+        onSubmit={this.handleClick} 
+        onChange={this.onChange}
+        value={this.state.inputValue} />
+        <ToDoList
+          todos={this.state.todos}
+          deleteTask={this.removeTodo}
+          completeTask={this.completeTodo}
+          save={this.saveEdit}
+        />
       </div>
     )
   }
