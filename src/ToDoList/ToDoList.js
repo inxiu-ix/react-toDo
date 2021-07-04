@@ -1,6 +1,5 @@
 import ToDoItem from '../ToDoItem/ToDoItem';
 const ToDoList = (props) => {
-  console.log('TODOS', props.todos);
   return (
     <ul>
       {props.todos.map((todo) => {
