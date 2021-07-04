@@ -16,15 +16,18 @@ export default function rootReducer(state = initialState, action) {
     case CHANGE:
       return { todos: [...state.todos], inputValue: action.payload };
     case ADD:
-      const todoItem = {
-        title: state.inputValue,
-        id: +new Date(),
-        completed: false,
-      };
-      return {
-        todos: [...state.todos, todoItem],
-        inputValue: '',
-      };
+      if (state.inputValue !== '') {
+        const todoItem = {
+          title: state.inputValue,
+          id: +new Date(),
+          completed: false,
+        };
+        return {
+          todos: [...state.todos, todoItem],
+          inputValue: '',
+        };
+      }
+      return { todos: state.todos, inputValue: state.inputValue };
     case REMOVE:
       const removeTodos = state.todos.filter(
         (todo) => todo.id !== action.payload
