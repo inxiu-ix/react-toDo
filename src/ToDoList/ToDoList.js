@@ -1,5 +1,6 @@
-import ToDoItem from '../ToDoItem/ToDoItem'
+import ToDoItem from '../ToDoItem/ToDoItem';
 const ToDoList = (props) => {
+  console.log('TODOS', props.todos);
   return (
     <ul>
       {props.todos.map((todo) => {
@@ -11,10 +12,10 @@ const ToDoList = (props) => {
             onChange={props.completeTask}
             save={props.save}
           />
-        )
+        );
       })}
     </ul>
-  )
-}
+  );
+};
 
-export default ToDoList
+export default ToDoList;

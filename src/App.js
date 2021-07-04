@@ -1,86 +1,58 @@
-import ToDoList from './ToDoList/ToDoList'
-import { Component } from 'react'
-import AddToDo from './AddToDo/AddToDo'
-import './index.scss'
+import ToDoList from './ToDoList/ToDoList';
+import { Component } from 'react';
+import { connect } from 'react-redux';
+import AddToDo from './AddToDo/AddToDo';
+import './index.scss';
+import {
+  add,
+  change,
+  complete,
+  remove,
+  saveEdit,
+} from './redux/actions/actions';
 
 class App extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      todos: [],
-      inputValue: '',
-    }
-    this.handleClick = this.handleClick.bind(this)
-  }
-
-  onChange = (e) => {
-    this.setState((state) => {
-      const inputValue = e.target.value
-
-      return { inputValue: state.inputValue + inputValue }
-    })
-  }
-
-  saveEdit = (value, todo) => {
-    const todos = this.state.todos
-    const index = todos.findIndex((t) => t.id === todo.id)
-    if (index !== -1) {
-      todo.title = value
-    }
-    this.setState(() => {
-      return { todos }
-    })
-  }
-
-  handleClick(e) {
-    e.preventDefault()
-    if (this.state.inputValue !== '') {
-      const todoItem = {
-        title: this.state.inputValue,
-        id: +new Date(),
-        completed: false,
-      }
-      this.setState({ todos: [...this.state.todos, todoItem], inputValue: '' })
-    }
-  }
-
-  removeTodo = (id) => {
-    this.setState(() => {
-      const todos = this.state.todos.filter((todo) => todo.id !== id)
-      return { todos }
-    })
-  }
-
-  completeTodo = (todo) => {
-    const todos = this.state.todos
-    const index = todos.findIndex((t) => t.id === todo.id)
-    if (index !== -1) {
-      todo.completed = !todo.completed
-    }
-    this.setState(() => {
-      return { todos }
-    })
-  }
-
   render() {
-    console.log('value>>>', this.state.inputValue)
     return (
       <div className="App">
         <h1>To Do List</h1>
         <AddToDo
-          onSubmit={this.handleClick}
-          onChange={this.onChange}
-          value={this.state.inputValue}
+          onSubmit={(e) => {
+            e.preventDefault();
+            this.props.onAdd();
+          }}
+          onChange={(e) => {
+            const str = e.target.value;
+            this.props.onChange(str);
+          }}
+          value={this.props.inputValue}
         />
         <ToDoList
-          todos={this.state.todos}
-          deleteTask={this.removeTodo}
-          completeTask={this.completeTodo}
-          save={this.saveEdit}
+          todos={this.props.todos}
+          deleteTask={(id) => this.props.onRemove(id)}
+          completeTask={(todo) => this.props.onComplete(todo)}
+          save={(value, todo) => this.props.onSaveEdit(value, todo)}
         />
       </div>
-    )
+    );
   }
 }
 
-export default App
+function mapStateToProps(state) {
+  return {
+    todos: state.todos,
+    inputValue: state.inputValue,
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    onChange: (str) => dispatch(change(str)),
+    onAdd: () => dispatch(add()),
+    onRemove: (id) => dispatch(remove(id)),
+    onComplete: (todo) => dispatch(complete(todo)),
+    onSaveEdit: (value, todo) => dispatch(saveEdit(value, todo)),
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

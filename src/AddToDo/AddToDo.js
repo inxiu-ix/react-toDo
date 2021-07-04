@@ -3,10 +3,10 @@ const AddToDo = (props) => {
     <div>
       <form onSubmit={props.onSubmit}>
         <input onChange={props.onChange} value={props.value} />
-        <button type='submit'>Добавить</button>
+        <button type="submit">Добавить</button>
       </form>
     </div>
-  )
-}
+  );
+};
 
-export default AddToDo
+export default AddToDo;

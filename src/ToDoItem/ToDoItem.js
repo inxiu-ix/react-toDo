@@ -1,19 +1,19 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 
 const ToDoItem = ({ todo, onClick, onChange, save }) => {
-  const [isEdit, setIsEdit] = useState(false)
-  const [editInputValue, setEditInputValue] = useState(todo.title)
-  const titleClasses = []
+  const [isEdit, setIsEdit] = useState(false);
+  const [editInputValue, setEditInputValue] = useState(todo.title);
+  const titleClasses = [];
 
   if (todo.completed) {
-    titleClasses.push('done')
+    titleClasses.push('done');
   }
 
   const editTodo = (e) => {
-    e.preventDefault()
-    save(editInputValue, todo)
-    setIsEdit(!isEdit)
-  }
+    e.preventDefault();
+    save(editInputValue, todo);
+    setIsEdit(!isEdit);
+  };
 
   return (
     <li>
@@ -35,7 +35,7 @@ const ToDoItem = ({ todo, onClick, onChange, save }) => {
         </form>
       )}
     </li>
-  )
-}
+  );
+};
 
-export default ToDoItem
+export default ToDoItem;
